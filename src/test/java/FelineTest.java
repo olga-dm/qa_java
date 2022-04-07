@@ -1,5 +1,4 @@
 import com.example.Feline;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,13 +34,9 @@ public class FelineTest {
     }
 
     @Test
-    public void checkEatMeatFeline() {
-        try {
-            List<String> eat = feline.eatMeat();
-            assertEquals(eat, List.of("Животные", "Птицы", "Рыба"));
-        } catch (Exception ex) {
-            Assert.assertNotEquals(ex, null);
-        }
+    public void checkEatMeatFeline() throws Exception {
+        List<String> eat = feline.eatMeat();
+        assertEquals(eat, List.of("Животные", "Птицы", "Рыба"));
     }
 
     @Test

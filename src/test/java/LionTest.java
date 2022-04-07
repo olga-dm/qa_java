@@ -1,6 +1,5 @@
 import com.example.Feline;
 import com.example.Lion;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +7,7 @@ import org.junit.runners.Parameterized;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
 public class LionTest {
@@ -32,12 +31,8 @@ public class LionTest {
     }
 
     @Before
-    public void init() {
-        try {
-            lion = new Lion(sex, new Feline());
-        } catch (Exception ex) {
-            Assert.assertEquals(ex.getMessage(), "Используйте допустимые значения пола животного - самей или самка");
-        }
+    public void init() throws Exception {
+        lion = new Lion(sex, new Feline());
     }
 
     @Test
@@ -52,12 +47,20 @@ public class LionTest {
     }
 
     @Test
-    public void checkFoodLion() {
-        try {
-            List<String> eat = lion.getFood();
-            assertEquals(eat, List.of("Животные", "Птицы", "Рыба"));
-        } catch (Exception ex) {
-            Assert.assertNotEquals(ex, null);
-        }
+    public void checkFoodLion() throws Exception {
+        List<String> eat = lion.getFood();
+        assertEquals(eat, List.of("Животные", "Птицы", "Рыба"));
+    }
+
+    @Test
+    public void checkException() {
+        Exception exception = assertThrows(Exception.class, () -> {
+            new Lion("другое", new Feline());
+        });
+
+        String expectedMessage = "Используйте допустимые значения пола животного - самей или самка";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }
